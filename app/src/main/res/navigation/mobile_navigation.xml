@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_exercise">
+
+    <fragment
+        android:id="@+id/navigation_exercise"
+        android:name="com.example.mydietolog.ui.home.HomeFragment"
+        android:label="@string/title_exercise"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_exercise_to_navigation_exercise_creator"
+            app:destination="@id/navigation_exercise_creator" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.example.mydietolog.ui.dashboard.DashboardFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/fragment_dashboard" >
+        <action
+            android:id="@+id/action_navigation_profile_to_settingsProfile"
+            app:destination="@+id/navigation_settings" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_recepts"
+        android:name="com.example.mydietolog.ui.notifications.NotificationsFragment"
+        android:label="@string/title_recepts"
+        tools:layout="@layout/fragment_notifications" >
+        <action
+            android:id="@+id/action_navigation_recepts_to_navigation_recepts_view"
+            app:destination="@id/navigation_recepts_view" />
+        <action
+            android:id="@+id/action_navigation_recepts_to_navigation_recepts_creator"
+            app:destination="@id/navigation_recepts_creator" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_menu"
+        android:name="com.example.mydietolog.ExerciseFragment"
+        android:label="@string/title_menu"
+        tools:layout="@layout/fragment_exercise" />
+
+    <fragment
+        android:id="@+id/navigation_settings"
+        android:name="com.example.mydietolog.SettingsProfile"
+        android:label="fragment_settings_profile"
+        tools:layout="@layout/fragment_settings_profile" />
+    <fragment
+        android:id="@+id/navigation_recepts_view"
+        android:name="com.example.mydietolog.SettingsProfile"
+        android:label="fragment_settings_profile"
+        tools:layout="@layout/fragment_recept_view" />
+    <fragment
+        android:id="@+id/navigation_recepts_creator"
+        android:name="com.example.mydietolog.SettingsProfile"
+        android:label="fragment_settings_profile"
+        tools:layout="@layout/fragment_create_recept" />
+    <fragment
+        android:id="@+id/navigation_exercise_creator"
+        android:name="com.example.mydietolog.SettingsProfile"
+        android:label="fragment_settings_profile"
+        tools:layout="@layout/fragment_add_exercise_view" />
+</navigation>
