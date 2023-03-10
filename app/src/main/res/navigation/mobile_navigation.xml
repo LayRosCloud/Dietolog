@@ -11,8 +11,8 @@
         android:label="@string/title_exercise"
         tools:layout="@layout/fragment_home" >
         <action
-            android:id="@+id/action_navigation_exercise_to_navigation_exercise_creator"
-            app:destination="@id/navigation_exercise_creator" />
+            android:id="@+id/action_navigation_exercise_to_addExerciseView"
+            app:destination="@id/addExerciseView" />
     </fragment>
 
     <fragment
@@ -31,11 +31,11 @@
         android:label="@string/title_recepts"
         tools:layout="@layout/fragment_notifications" >
         <action
-            android:id="@+id/action_navigation_recepts_to_navigation_recepts_view"
-            app:destination="@id/navigation_recepts_view" />
+            android:id="@+id/action_navigation_recepts_to_createRecept"
+            app:destination="@id/createRecept" />
         <action
-            android:id="@+id/action_navigation_recepts_to_navigation_recepts_creator"
-            app:destination="@id/navigation_recepts_creator" />
+            android:id="@+id/action_navigation_recepts_to_receptView"
+            app:destination="@id/receptView" />
     </fragment>
     <fragment
         android:id="@+id/navigation_menu"
@@ -49,18 +49,18 @@
         android:label="fragment_settings_profile"
         tools:layout="@layout/fragment_settings_profile" />
     <fragment
-        android:id="@+id/navigation_recepts_view"
-        android:name="com.example.mydietolog.SettingsProfile"
-        android:label="fragment_settings_profile"
-        tools:layout="@layout/fragment_recept_view" />
-    <fragment
-        android:id="@+id/navigation_recepts_creator"
-        android:name="com.example.mydietolog.SettingsProfile"
-        android:label="fragment_settings_profile"
+        android:id="@+id/createRecept"
+        android:name="com.example.mydietolog.CreateRecept"
+        android:label="fragment_create_recept"
         tools:layout="@layout/fragment_create_recept" />
     <fragment
-        android:id="@+id/navigation_exercise_creator"
-        android:name="com.example.mydietolog.SettingsProfile"
-        android:label="fragment_settings_profile"
+        android:id="@+id/receptView"
+        android:name="com.example.mydietolog.ReceptView"
+        android:label="fragment_recept_view"
+        tools:layout="@layout/fragment_recept_view" />
+    <fragment
+        android:id="@+id/addExerciseView"
+        android:name="com.example.mydietolog.AddExerciseView"
+        android:label="fragment_add_exercise_view"
         tools:layout="@layout/fragment_add_exercise_view" />
 </navigation>

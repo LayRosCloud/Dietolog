@@ -30,8 +30,8 @@
             <ImageButton
                 android:id="@+id/imageButton"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:src="@drawable/notfound"/>
+                android:layout_height="180dp"
+                android:src="@drawable/notfound" />
 
             <EditText
                 android:id="@+id/description_recept"
@@ -75,10 +75,12 @@
                 android:inputType="numberDecimal" />
 
             <LinearLayout
+                android:id="@+id/containerIngredients"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <LinearLayout
+                android:id="@+id/templateIngredient"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -104,6 +106,7 @@
 
             </LinearLayout>
             <Button
+                android:id="@+id/addIngredientField"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Добавить ингредиент"/>
@@ -112,6 +115,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <LinearLayout
+                    android:id="@+id/templateStep"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -139,6 +143,7 @@
                         android:inputType="textMultiLine"
                         android:hint="Введите описание шага" />
                     <Button
+                        android:id="@+id/addStepTemplate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Добавить шаг"/>

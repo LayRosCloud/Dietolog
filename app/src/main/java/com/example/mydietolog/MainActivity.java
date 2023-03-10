@@ -1,36 +1,31 @@
 package com.example.mydietolog;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.mydietolog.data.Contants;
-import com.example.mydietolog.data.DataContext;
-import com.example.mydietolog.data.ReaderDatabase;
-import com.example.mydietolog.data.WritableDatabase;
-import com.example.mydietolog.model.Exercise;
-import com.example.mydietolog.model.User;
-
-import java.util.Locale;
+import com.example.mydietolog.data.DatabaseHelper;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
-
     private EditText edLogin, edPassword;
+    FirebaseAuth _mAuth = FirebaseAuth.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SharedPreferences sPref = getPreferences(MODE_PRIVATE);
-        String savedText = sPref.getString(Contants.LocalData.USER_LOGIN, "");
+        DatabaseHelper helper = new DatabaseHelper(getApplicationContext());
+        helper.onCreate(helper.getWritableDatabase());
 
-        if(!savedText.isEmpty() || !(savedText == "")){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user != null){
             Intent intent = new Intent(MainActivity.this, Container.class);
 
             startActivity(intent);
@@ -48,34 +43,23 @@ public class MainActivity extends AppCompatActivity {
         String login = edLogin.getText().toString();
         String password = edPassword.getText().toString();
 
-        new ReaderDatabase().readUser(login.toLowerCase(Locale.ROOT), user -> {
-            if (user != null) {
-                Log.d("UserFinding", "User is exists" + user.getLogin());
+        login = login.toLowerCase().trim();
 
-                if (password.equals(user.getPassword())) {
-                    Toast.makeText(
-                            MainActivity.this,
-                            Contants.Notifications.COMPLETE_AUTH,
-                            Toast.LENGTH_LONG).show();
-                    SharedPreferences sPref = getPreferences(MODE_PRIVATE);
-                    SharedPreferences.Editor ed = sPref.edit();
-                    ed.putString(Contants.LocalData.USER_LOGIN, user.getLogin());
-                    ed.apply();
-
-                    Intent intent = new Intent(MainActivity.this, Container.class);
-
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(
-                            MainActivity.this,
-                            Contants.Notifications.NOT_COMPLETE_AUTH,
-                            Toast.LENGTH_LONG).show();
-                }
+        final String finalLogin = login;
+        _mAuth.signInWithEmailAndPassword(login, password).
+                addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                Intent intent = new Intent(this, Container.class);
+                intent.putExtra("login", finalLogin);
+                startActivity(intent);
+            }
+            else{
+                Toast.makeText(this, "Авторизация не выполнена", Toast.LENGTH_LONG).show();
             }
         });
     }
     public void navigateToRegister(View view){
-        Intent intent = new Intent(this ,Register.class);
+        Intent intent = new Intent(this, Register.class);
 
         startActivity(intent);
     }

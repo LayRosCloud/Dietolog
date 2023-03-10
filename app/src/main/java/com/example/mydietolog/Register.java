@@ -1,31 +1,30 @@
 package com.example.mydietolog;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.mydietolog.data.Contants;
-import com.example.mydietolog.data.WritableDatabase;
-import com.example.mydietolog.model.User;
+import com.example.mydietolog.data.DatabaseHelper;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class Register extends AppCompatActivity {
-
     private EditText _edLogin, _edEmail, _edPass, _edPassRepeat, _edAge, _edWeight, _edHeight;
+    FirebaseAuth _mAuth = FirebaseAuth.getInstance();
+    SQLiteDatabase db;
 
+    private DatabaseHelper databaseHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        SharedPreferences sPref = getPreferences(MODE_PRIVATE);
-        SharedPreferences.Editor ed = sPref.edit();
-        ed.putString(Contants.LocalData.USER_LOGIN, "");
-        ed.apply();
+        databaseHelper = new DatabaseHelper(getApplicationContext());
 
         init();
     }
@@ -41,8 +40,6 @@ public class Register extends AppCompatActivity {
     }
 
     public void registerUser(View view){
-        WritableDatabase writer = new WritableDatabase();
-
         String login = _edLogin.getText().toString();
         String email = _edEmail.getText().toString();
         String pass = _edPass.getText().toString();
@@ -52,58 +49,51 @@ public class Register extends AppCompatActivity {
         double weight = Double.parseDouble(_edWeight.getText().toString());
         double height = Double.parseDouble(_edHeight.getText().toString());
 
-
+        String error = "";
 
         if(login.length() < 4){
-            Toast.makeText(this,
-                    Contants.Notifications.REGISTER_PROBLEM_LOGIN,
-                    Toast.LENGTH_LONG).show();
-            return;
+            error = Contants.Notifications.REGISTER_PROBLEM_LOGIN;
         }
         else if(!email.contains("@")){
-            Toast.makeText(this,
-                    Contants.Notifications.REGISTER_PROBLEM_EMAIL,
-                    Toast.LENGTH_LONG).show();
-            return;
+            error = Contants.Notifications.REGISTER_PROBLEM_EMAIL;
         }
-        else if(pass.length() < 4){
-            Toast.makeText(this,
-                    Contants.Notifications.REGISTER_PROBLEM_PASS,
-                    Toast.LENGTH_LONG).show();
-            return;
+        else if(pass.length() < 6){
+            error = Contants.Notifications.REGISTER_PROBLEM_PASS;
         }
         else if(!pass.equals(passRepeat)){
-            Toast.makeText(this,
-                    Contants.Notifications.REGISTER_PROBLEM_PASSREPEAT,
-                    Toast.LENGTH_LONG).show();
-            return;
+            error = Contants.Notifications.REGISTER_PROBLEM_PASSREPEAT;
         }
         else if(age < 0 || age > 200){
-            Toast.makeText(this,
-                    Contants.Notifications.REGISTER_PROBLEM_AGE,
-                    Toast.LENGTH_LONG).show();
-            return;
+            error = Contants.Notifications.REGISTER_PROBLEM_AGE;
         }
         else if(height < 0 || height > 400){
-            Toast.makeText(this,
-                    Contants.Notifications.REGISTER_PROBLEM_HEIGHT,
-                    Toast.LENGTH_LONG).show();
-            return;
+            error = Contants.Notifications.REGISTER_PROBLEM_HEIGHT;
         }
         else if(weight < 0 || weight > 1000){
+            error = Contants.Notifications.REGISTER_PROBLEM_WEIGHT;
+        }
+
+        if(!error.equals("")){
             Toast.makeText(this,
-                    Contants.Notifications.REGISTER_PROBLEM_WEIGHT,
+                    error,
                     Toast.LENGTH_LONG).show();
             return;
         }
 
-        User user = new User(login, email, pass, age, weight, height, 0);
+        _mAuth.createUserWithEmailAndPassword(email, pass)
+                .addOnCompleteListener(this, task -> {
+                    if(task.isSuccessful()){
+                       Toast.makeText(this, "регистрация успешна", Toast.LENGTH_LONG).show();
 
-        writer.write(user);
+                       databaseHelper.insertInUser(login, age, weight, height);
+                       Intent intent = new Intent(this, MainActivity.class);
 
-        Intent intent = new Intent(this, MainActivity.class);
-
-        startActivity(intent);
+                       startActivity(intent);
+                    }
+                    else{
+                        Toast.makeText(this, "регистрация провалена", Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 
     public void navigateToAuth(View view){

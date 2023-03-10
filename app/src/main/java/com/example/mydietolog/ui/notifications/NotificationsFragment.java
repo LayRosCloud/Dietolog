@@ -18,7 +18,6 @@ import com.example.mydietolog.databinding.FragmentNotificationsBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class NotificationsFragment extends Fragment {
-
     private FragmentNotificationsBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -30,13 +29,11 @@ public class NotificationsFragment extends Fragment {
         View root = binding.getRoot();
 
         final TextView textView = binding.textNotifications;
-        final ListView listView = binding.receptsList;
         final FloatingActionButton button = binding.navigateToCreateView;
 
-        NavController hostFragment = NavHostFragment.findNavController(this);
-
         button.setOnClickListener(view -> {
-            hostFragment.navigate(R.id.action_navigation_recepts_to_navigation_recepts_creator);
+            NavController hostFragment = NavHostFragment.findNavController(this);
+            hostFragment.navigate(R.id.action_navigation_recepts_to_createRecept);
         });
 
         notificationsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);

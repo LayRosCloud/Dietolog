@@ -1,13 +1,13 @@
 <resources>
-    <string name="app_name">Как стать амбалом</string>
-    <string name="login_reg">Введите кликуху*</string>
-    <string name="email_reg">Какой адрес*</string>
-    <string name="pass_reg">Запоролься*</string>
-    <string name="pass_repeat_reg">Поясни за базар*</string>
-    <string name="age_reg">Сколько чалишься*</string>
-    <string name="weight_reg">Скажи пропорци*</string>
-    <string name="height_reg">Че шпала??*</string>
-    <string name="auth_name">Залететь на хату</string>
+    <string name="app_name">ВАШ РАЦИОН</string>
+    <string name="login_reg">Введите логин*</string>
+    <string name="email_reg">Введите почту*</string>
+    <string name="pass_reg">Введите пароль*</string>
+    <string name="pass_repeat_reg">Повторите пароль*</string>
+    <string name="age_reg">Укажите возраст*</string>
+    <string name="weight_reg">Укажите вес*</string>
+    <string name="height_reg">Укажите рост*</string>
+    <string name="auth_name">Войти</string>
     <string name="reg_name">Зарегистрироваться</string>
     <string name="auth_btn">Авторизация</string>
     <string name="title_activity_container">Container</string>
@@ -17,6 +17,6 @@
     <string name="title_menu">Меню</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="Finder">Поиск...</string>
+    <string name="Finder">Поиск…</string>
     <string name="height">Ваш рост</string>
 </resources>
