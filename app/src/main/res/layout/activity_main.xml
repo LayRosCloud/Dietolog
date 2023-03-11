@@ -3,15 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_marginHorizontal="10dp"
     android:layout_height="match_parent"
+    android:layout_marginHorizontal="10dp"
     tools:context=".MainActivity">
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="256dp"
+        android:layout_marginTop="200dp"
         android:text="@string/app_name"
         android:textSize="32sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,32 +21,32 @@
         android:id="@+id/edLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:autofillHints=""
         android:ems="10"
         android:hint="@string/login_reg"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        android:autofillHints="" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
         android:id="@+id/pass"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:autofillHints=""
         android:ems="10"
         android:hint="@string/pass_reg"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="@+id/edLogin"
         app:layout_constraintStart_toStartOf="@+id/edLogin"
-        app:layout_constraintTop_toBottomOf="@+id/edLogin"
-        android:autofillHints="" />
+        app:layout_constraintTop_toBottomOf="@+id/edLogin" />
 
     <Button
         android:id="@+id/btnauth"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="auth"
         android:height="30sp"
+        android:onClick="auth"
         android:text="@string/auth_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -56,8 +56,8 @@
         android:id="@+id/regbtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="navigateToRegister"
         android:height="30sp"
+        android:onClick="navigateToRegister"
         android:text="@string/reg_name"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

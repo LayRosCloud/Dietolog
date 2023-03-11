@@ -9,27 +9,35 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Добавление рецепта"/>
+        android:text="Добавление упражнения"
+        android:textSize="20sp"
+        android:layout_marginBottom="20dp"/>
 
     <Spinner
         android:id="@+id/spinnerOfExercise"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        />
-    <TextView
-        android:id="@+id/tvTitle"
-        android:textSize="20sp"
+        android:backgroundTint="@color/yellow_700"/>
+
+    <ImageView
+        android:id="@+id/exerciseImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Наименование"/>
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/tvDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Описание"/>
 
     <EditText
         android:id="@+id/etCountRepeat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="numberSigned"
-        android:hint="Введите кол-во повторений"/>
+        android:hint="Введите кол-во повторений"
+        android:inputType="numberSigned" />
 
     <Button
         android:id="@+id/addExercise"

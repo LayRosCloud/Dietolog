@@ -25,7 +25,15 @@ public class DashboardFragment extends Fragment {
         View root = binding.getRoot();
 
         final TextView textView = binding.textDashboard;
+        final TextView tvHeight = binding.tvHeight;
+        final TextView tvWeight = binding.tvWeight;
+        final TextView tvAge = binding.tvAge;
+        final TextView tvSpentCalories = binding.tvSpentCalories;
         dashboardViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        dashboardViewModel.getHeight().observe(getViewLifecycleOwner(), tvHeight::setText);
+        dashboardViewModel.getWeight().observe(getViewLifecycleOwner(), tvWeight::setText);
+        dashboardViewModel.getAge().observe(getViewLifecycleOwner(), tvAge::setText);
+        dashboardViewModel.getSpentCalories().observe(getViewLifecycleOwner(), tvSpentCalories::setText);
         return root;
     }
 

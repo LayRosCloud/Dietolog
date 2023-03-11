@@ -21,15 +21,20 @@ public class ReaderDatabase {
 
     public void readUser(String login, final DataContext.DataLoad status){
         _data.DataUsers.
-                child(login.toLowerCase()).
-                get().
-                addOnCompleteListener(
-                task -> {
-                    addExercises(Objects.requireNonNull(createUser(login, task)), status);
-                });
-    }
+            child(login.toLowerCase()).
+            get().
+            addOnCompleteListener(
+            task -> {
+                try {
+                    User user = Objects.requireNonNull(createUser(login, task));
+                    status.loaded(user);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+}
 
-    private User createUser(String login,Task<DataSnapshot> task){
+    private User createUser(String login,Task<DataSnapshot> task) throws Exception {
         if(task.isSuccessful()){
             if(task.getResult().exists()){
                 DataSnapshot dataSnapshot = task.getResult();
@@ -47,13 +52,7 @@ public class ReaderDatabase {
                 double height = Double.parseDouble(heightTemp);
                 double spentCalories = Double.parseDouble(spentCaloriesTemp);
 
-                User user = new User(login.toLowerCase(Locale.ROOT),
-                        email,
-                        password,
-                        age,
-                        weight,
-                        height,
-                        spentCalories);
+                User user = new User();
 
                 return user;
             }
@@ -62,51 +61,5 @@ public class ReaderDatabase {
             }
         }
         return null;
-    }
-
-    private void addExercises(User user, final DataContext.DataLoad status){
-        _data.DataUsers.child(user.getLogin()).child(Contants.User.EXERCISES).
-        addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                List<Exercise> exercises = new ArrayList<>();
-                for(DataSnapshot data: snapshot.getChildren()){
-                    String description = String.valueOf(
-                            data.child(Contants.Exercise.DESCRIPTION).getValue());
-                    String title = String.valueOf(
-                            data.child(Contants.Exercise.TITLE).getValue());
-
-                    int image = Integer.parseInt(String.valueOf(
-                            data.child(Contants.Exercise.IMAGE).getValue()));
-                    int spentCalories = Integer.parseInt(String.valueOf(
-                            data.child(Contants.Exercise.SPENT_CALORIES).getValue()));
-
-                    Exercise exercise = new Exercise(image, title, description, spentCalories);
-
-                    exercises.add(exercise);
-                }
-                user.addExercise(exercises);
-                status.loaded(user);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
-    private void readAllRecepts(final DataContext.DataLoadRecept status){
-        _data.DataRecepts.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
     }
 }

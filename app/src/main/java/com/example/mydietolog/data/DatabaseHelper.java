@@ -1,43 +1,98 @@
 package com.example.mydietolog.data;
 
-import android.content.ContentValues;
 import android.content.Context;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import androidx.annotation.Nullable;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-    private static final int SCHEMA = 1;
-    private static final String DATABASE_NAME = "app.db";
 
-    public DatabaseHelper(@Nullable Context context) {
-        super(context, DATABASE_NAME, null, SCHEMA);
+    private static final String DB_NAME = "app.db";
+    private static String DB_PATH = "";
+    private static final int DB_VERSION = 4;
+
+    private SQLiteDatabase _mDataBase;
+    private final Context _mContext;
+    private boolean _mNeedUpdate = false;
+
+    public DatabaseHelper(Context context) {
+        super(context, DB_NAME, null, DB_VERSION);
+        DB_PATH = context.getApplicationInfo().dataDir + "/databases/";
+        this._mContext = context;
+
+        copyDataBase();
+
+        this.getReadableDatabase();
+    }
+
+    public void updateDataBase() throws IOException {
+        if (_mNeedUpdate) {
+            File dbFile = new File(DB_PATH + DB_NAME);
+            if (dbFile.exists())
+                dbFile.delete();
+
+            copyDataBase();
+
+            _mNeedUpdate = false;
+        }
+    }
+
+    private boolean checkDataBase() {
+        File dbFile = new File(DB_PATH + DB_NAME);
+        return dbFile.exists();
+    }
+
+    private void copyDataBase() {
+        if (!checkDataBase()) {
+            this.getReadableDatabase();
+            this.close();
+            try {
+                copyDBFile();
+            } catch (IOException mIOException) {
+                throw new Error("ErrorCopyingDataBase");
+            }
+        }
+    }
+
+    private void copyDBFile() throws IOException {
+        InputStream mInput = _mContext.getAssets().open(DB_NAME);
+        OutputStream mOutput = new FileOutputStream(DB_PATH + DB_NAME);
+        byte[] mBuffer = new byte[1024];
+        int mLength;
+        while ((mLength = mInput.read(mBuffer)) > 0)
+            mOutput.write(mBuffer, 0, mLength);
+        mOutput.flush();
+        mOutput.close();
+        mInput.close();
+    }
+
+    public boolean openDataBase() throws SQLException {
+        _mDataBase = SQLiteDatabase.openDatabase(DB_PATH + DB_NAME, null, SQLiteDatabase.CREATE_IF_NECESSARY);
+
+        return _mDataBase != null;
     }
 
     @Override
-    public void onCreate(SQLiteDatabase db){
-        db.execSQL(Contants.ConstantsSQL.CREATOR.TABLE_USER);
-        db.execSQL(Contants.ConstantsSQL.CREATOR.TABLE_EXERCISE);
-        db.execSQL(Contants.ConstantsSQL.CREATOR.TABLE_EXERCISE_USER);
+    public synchronized void close() {
+        if (_mDataBase != null)
+            _mDataBase.close();
+        super.close();
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int i, int i1){
-        db.execSQL(Contants.ConstantsSQL.Dropper.DROP_EXERCISE_USER);
-        db.execSQL(Contants.ConstantsSQL.Dropper.DROP_USERS);
-        db.execSQL(Contants.ConstantsSQL.Dropper.DROP_EXERCISE);
-        onCreate(db);
+    public void onCreate(SQLiteDatabase db) {
+
     }
-    public void insertInUser(String login, int age, double weight, double height){
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues cv = new ContentValues();
 
-        cv.put(Contants.ConstantsSQL.User.LOGIN, login);
-        cv.put(Contants.ConstantsSQL.User.AGE, age);
-        cv.put(Contants.ConstantsSQL.User.WEIGHT, weight);
-        cv.put(Contants.ConstantsSQL.User.HEIGHT, height);
-
-        db.insert(Contants.ConstantsSQL.User.TABLE, null, cv);
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        if (newVersion > oldVersion)
+            _mNeedUpdate = true;
     }
 }

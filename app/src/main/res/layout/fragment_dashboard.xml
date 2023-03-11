@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.dashboard.DashboardFragment">
+    tools:context=".ui.dashboard.DashboardFragment"
+    >
 
     <TextView
         android:id="@+id/text_dashboard"
@@ -46,6 +47,7 @@
                     android:text="@string/height" />
 
                 <TextView
+                    android:id="@+id/tvHeight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
@@ -67,6 +69,7 @@
                     android:text="Ваш вес" />
 
                 <TextView
+                    android:id="@+id/tvWeight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
@@ -87,6 +90,7 @@
                     android:text="Ваш возраст" />
 
                 <TextView
+                    android:id="@+id/tvAge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
@@ -107,13 +111,14 @@
                     android:text="Кол-во калорий" />
 
                 <TextView
+                    android:id="@+id/tvSpentCalories"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:background="@drawable/whitebackgroundshape"
                     android:padding="2dp"
                     android:textAlignment="center"
-                    android:text="Кол-во" />
+                    android:text="Кол-во"/>
             </TableRow>
         </TableLayout>
         <ImageView

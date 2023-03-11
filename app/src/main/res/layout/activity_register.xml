@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
-            android:hint="@string/login_reg" />
+            android:hint="@string/login_reg"/>
 
         <EditText
             android:id="@+id/edEmail"
@@ -77,6 +77,24 @@
             android:ems="10"
             android:hint="@string/height_reg"
             android:inputType="numberDecimal" />
+
+        <Switch
+            android:id="@+id/sex"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Пол:"
+            android:thumb="@drawable/thumb"
+            android:track="@drawable/track"
+            android:showText="true"
+            tools:ignore="UseSwitchCompatOrMaterialXml"
+            android:textOn="М"
+            android:textOff="Ж"
+            android:minHeight="40dp"/>
+        <Spinner
+            android:id="@+id/spActivity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="40dp"/>
 
         <Button
             android:id="@+id/regbtn"

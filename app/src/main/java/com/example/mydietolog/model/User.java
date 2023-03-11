@@ -8,7 +8,7 @@ import java.util.List;
 
 @IgnoreExtraProperties
 public class User {
-    private String _id;
+    private int _id;
     private String _login;
     private String _email;
     private String _password;
@@ -16,21 +16,22 @@ public class User {
     private double _weight;
     private double _height;
     private double _spentCalories;
-    private final List<Exercise> _exercises;
+    private int _sex;
+    private int _activity;
 
     public User() throws Exception{
-        setId("Users");
+        _id = 0;
         setLogin("this is problem User");
         setEmail("@ru.ru");
         setPassword("1234567890");
         setAge(0);
         setWeight(0.0);
         setHeight(0.0);
-        _exercises = new ArrayList<>();
+        _activity = 0;
     }
 
-    public User(String login, String email, String password, int age, double weight, double height, double spentCalories){
-        setId("Users");
+    public User(int id,String login, String email, String password, int age, double weight, double height, double spentCalories,int sex, int activity){
+        _id = id;
         setLogin(login);
         setEmail(email);
         setPassword(password);
@@ -39,16 +40,14 @@ public class User {
             setWeight(weight);
             setHeight(height);
             setSpentCalories(spentCalories);
+            setActivity(activity);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        _exercises = new ArrayList<>();
-
+        _sex = sex;
     }
-    public void setId(String value){
-        _id = value;
-    }
-    public String getId(){
+    public int getSex(){return _sex;}
+    public int getId(){
         return _id;
     }
     public void setLogin(String value){
@@ -98,18 +97,6 @@ public class User {
     public double getHeight(){
         return  _height;
     }
-    public List<Exercise> getListExercises(){
-        return _exercises;
-    }
-    public void addExercise(Exercise value){
-        _exercises.add(value);
-    }
-    public void addExercise(Exercise[] values){
-        _exercises.addAll(Arrays.asList(values));
-    }
-    public void addExercise(List<Exercise> values){
-        _exercises.addAll(values);
-    }
 
     public double getSpentCalories(){
         return _spentCalories;
@@ -121,4 +108,15 @@ public class User {
         }
         _spentCalories = value;
     }
+
+    public void setActivity(int value) throws  Exception{
+        if(value < 0 || value > 4){
+            throw new Exception("Ошибка!");
+        }
+        _activity = value;
+    }
+    public int getActivity(){
+        return _activity;
+    }
+
 }

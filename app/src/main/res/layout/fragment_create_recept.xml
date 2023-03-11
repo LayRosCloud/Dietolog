@@ -149,8 +149,6 @@
                         android:text="Добавить шаг"/>
                 </LinearLayout>
             </LinearLayout>
-
-
         </LinearLayout>
     </ScrollView>
 </FrameLayout>
