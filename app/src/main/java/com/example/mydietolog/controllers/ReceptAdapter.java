@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.mydietolog.R;
 import com.example.mydietolog.model.Ingridient;
 import com.example.mydietolog.model.Recept;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +62,7 @@ public class ReceptAdapter extends BaseAdapter {
         TextView calories = view.findViewById(R.id.calories);
         TextView fats = view.findViewById(R.id.fats);
         TextView protein = view.findViewById(R.id.protein);
-        ImageView image = view.findViewById(R.id.imageIcon);
+        ImageView image = view.findViewById(R.id.ivRecepts);
 
         Recept recept = _recepts.get(i);
 
@@ -71,6 +72,7 @@ public class ReceptAdapter extends BaseAdapter {
         protein.setText(String.valueOf(recept.getProtein()));
         title.setText(recept.getTitle());
         description.setText(recept.getTitle());
+        Picasso.get().load(recept.getImage()).into(image);
 
         int index = 0;
         return view;

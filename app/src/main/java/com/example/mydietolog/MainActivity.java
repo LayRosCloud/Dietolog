@@ -28,8 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+
 
         DatabaseHelper mDBHelper = new DatabaseHelper(this);
 
@@ -57,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
         init();
     }
 
@@ -88,17 +89,19 @@ public class MainActivity extends AppCompatActivity {
     private void getCurrentUser(String email){
         Cursor cursor = mDb.rawQuery("SELECT * FROM User WHERE email LIKE \'" + email +"\'", null);
 
-        cursor.moveToNext();
-        int id = cursor.getInt(0);
-        String login = cursor.getString(1);
-        int age = cursor.getInt(2);
-        double weight = cursor.getDouble(3);
-        double height = cursor.getDouble(4);
-        double spentCalories = cursor.getDouble(5);
-        int sex = cursor.getInt(6);
-        int activity = cursor.getInt(7);
+        if(cursor.getCount() > 0){
+            cursor.moveToNext();
+            int id = cursor.getInt(0);
+            String login = cursor.getString(1);
+            int age = cursor.getInt(2);
+            double weight = cursor.getDouble(3);
+            double height = cursor.getDouble(4);
+            double spentCalories = cursor.getDouble(5);
+            int sex = cursor.getInt(6);
+            int activity = cursor.getInt(7);
 
-        Contants.CurrentUser = new User(id, login, email, "", age, weight, height, spentCalories, sex, activity);
+            Contants.CurrentUser = new User(id, login, email, "", age, weight, height, spentCalories, sex, activity);
+        }
     }
 
     public void navigateToRegister(View view){

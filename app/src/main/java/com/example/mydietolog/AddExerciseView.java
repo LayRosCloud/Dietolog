@@ -5,7 +5,6 @@ import static android.R.layout.simple_spinner_item;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -98,7 +97,8 @@ public class AddExerciseView extends Fragment {
         });
 
         btn.setOnClickListener(view -> {
-            Cursor cursor1 = db.rawQuery("SELECT * FROM Exercise WHERE _id = " + spExercises.getSelectedItemPosition() + 1, null);
+            Cursor cursor1 = db.rawQuery("SELECT * FROM Exercise WHERE Name LIKE \'"
+                    + spExercises.getSelectedItem().toString() + "\'", null);
             cursor1.moveToNext();
             int id = cursor1.getInt(0);
             String name = cursor1.getString(1);
@@ -110,6 +110,9 @@ public class AddExerciseView extends Fragment {
             Exercise exercise = new Exercise(id, image, name, description, spentCalories);
             UserExercises userExercises = new UserExercises(Contants.CurrentUser);
             userExercises.addExercise(db, exercise, valueRepeat);
+
+            NavController hostFragment = NavHostFragment.findNavController(this);
+            hostFragment.navigate(R.id.action_addExerciseView_to_navigation_exercise);
         });
 
         return root;

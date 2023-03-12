@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_navigation_exercise_to_addExerciseView"
             app:destination="@id/addExerciseView" />
+        <action
+            android:id="@+id/action_navigation_exercise_self"
+            app:destination="@id/navigation_exercise" />
     </fragment>
 
     <fragment
@@ -52,7 +55,11 @@
         android:id="@+id/createRecept"
         android:name="com.example.mydietolog.CreateRecept"
         android:label="fragment_create_recept"
-        tools:layout="@layout/fragment_create_recept" />
+        tools:layout="@layout/fragment_create_recept" >
+        <action
+            android:id="@+id/action_createRecept_to_navigation_recepts"
+            app:destination="@id/navigation_recepts" />
+    </fragment>
     <fragment
         android:id="@+id/receptView"
         android:name="com.example.mydietolog.ReceptView"
@@ -62,5 +69,9 @@
         android:id="@+id/addExerciseView"
         android:name="com.example.mydietolog.AddExerciseView"
         android:label="fragment_add_exercise_view"
-        tools:layout="@layout/fragment_add_exercise_view" />
+        tools:layout="@layout/fragment_add_exercise_view" >
+        <action
+            android:id="@+id/action_addExerciseView_to_navigation_exercise"
+            app:destination="@id/navigation_exercise" />
+    </fragment>
 </navigation>

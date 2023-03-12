@@ -1,14 +1,17 @@
 package com.example.mydietolog.model;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
 public class Ingridient {
     private final String _name;
     private final int _number;
-    private final String _unit;
+    private final int _unitID;
 
-    public Ingridient(String name, int number, String unit){
+    public Ingridient(String name, int number, int unitID){
         _name = name;
         _number = number;
-        _unit = unit;
+        _unitID = unitID;
     }
 
     public String getName(){
@@ -19,7 +22,13 @@ public class Ingridient {
         return _number;
     }
 
-    public String getUnit(){
-        return _unit;
+    public int getUnit(){
+        return _unitID;
+    }
+
+    public String getNameUnit(SQLiteDatabase db){
+        Cursor cursor = db.rawQuery("SELECT Name FROM Unit WHERE UnitID = " + _unitID, null);
+        cursor.moveToNext();
+        return cursor.getString(0);
     }
 }

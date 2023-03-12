@@ -11,26 +11,43 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.example.mydietolog.data.Contants;
+import com.example.mydietolog.databinding.FragmentExerciseBinding;
+import com.example.mydietolog.databinding.FragmentNotificationsBinding;
+import com.example.mydietolog.ui.notifications.NotificationsViewModel;
 
 public class ExerciseFragment extends Fragment {
 
-    private ExerciseViewModel mViewModel;
+    private FragmentExerciseBinding binding;
 
-    public static ExerciseFragment newInstance() {
-        return new ExerciseFragment();
-    }
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_exercise, container, false);
+        NotificationsViewModel notificationsViewModel =
+                new ViewModelProvider(this).get(NotificationsViewModel.class);
+
+        binding = FragmentExerciseBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
+
+        final TextView tvTitle = binding.menuTitle;
+        final TextView tvEmail = binding.menuEmail;
+
+        tvTitle.setText(Contants.CurrentUser.getLogin());
+        tvEmail.setText(Contants.CurrentUser.getEmail());
+
+
+
+        return root;
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(ExerciseViewModel.class);
-        // TODO: Use the ViewModel
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 
 }

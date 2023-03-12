@@ -7,6 +7,12 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.mydietolog.data.Contants;
+import com.example.mydietolog.data.DatabaseHelper;
+import com.example.mydietolog.model.Exercise;
+import com.example.mydietolog.model.UserExercises;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DashboardViewModel extends ViewModel {
 
@@ -27,7 +33,6 @@ public class DashboardViewModel extends ViewModel {
         mHeight.setValue(String.valueOf(Contants.CurrentUser.getHeight()));
         mWeight.setValue(String.valueOf(Contants.CurrentUser.getWeight()));
         mAge.setValue(String.valueOf(Contants.CurrentUser.getAge()));
-        mSpentCalories.setValue(String.valueOf(Math.round(Contants.CurrentUser.getSpentCalories())));
     }
 
     public LiveData<String> getText() {

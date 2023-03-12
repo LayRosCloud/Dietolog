@@ -7,6 +7,14 @@ public final class Contants {
 
     public static com.example.mydietolog.model.User CurrentUser;
 
+    static {
+        try {
+            CurrentUser = new com.example.mydietolog.model.User();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public static final class User{
         public static final String TABLE = "Users";
         public static final String EMAIL = "Email";

@@ -1,5 +1,6 @@
 package com.example.mydietolog.ui.notifications;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +15,11 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.mydietolog.R;
+import com.example.mydietolog.controllers.ExerciseAdapter;
+import com.example.mydietolog.controllers.ReceptAdapter;
+import com.example.mydietolog.data.DatabaseHelper;
 import com.example.mydietolog.databinding.FragmentNotificationsBinding;
+import com.example.mydietolog.model.Recept;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class NotificationsFragment extends Fragment {
@@ -28,8 +33,16 @@ public class NotificationsFragment extends Fragment {
         binding = FragmentNotificationsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        DatabaseHelper helper = new DatabaseHelper(getContext());
+        SQLiteDatabase db = helper.getWritableDatabase();
+
         final TextView textView = binding.textNotifications;
         final FloatingActionButton button = binding.navigateToCreateView;
+
+        final ListView recepts = binding.receptsList;
+
+        ReceptAdapter receptAdapter = new ReceptAdapter(getContext(), Recept.getRecepts(db));
+        recepts.setAdapter(receptAdapter);
 
         button.setOnClickListener(view -> {
             NavController hostFragment = NavHostFragment.findNavController(this);

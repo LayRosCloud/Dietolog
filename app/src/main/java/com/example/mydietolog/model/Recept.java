@@ -1,10 +1,16 @@
 package com.example.mydietolog.model;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class Recept {
+    private final int _id;
     private final String _author;
     private final String _title;
     private final String _description;
@@ -13,12 +19,20 @@ public class Recept {
     private final double _carbohydrates;
     private final double _fats;
     private final double _protein;
-    private final List<Ingridient> _ingridients;
-    private final List<StepOfRecepts> _steps;
+    private final int _categoryId;
 
 
-    public Recept(String author, String title, String description, String imageIcon,
-                  double calories, double carbohydrates, double fats, double protein) {
+    public Recept(@NonNull int id,
+                  @NonNull String author,
+                  @NonNull String title,
+                  @NonNull String description,
+                  @NonNull String imageIcon,
+                  @NonNull double calories,
+                  @NonNull double carbohydrates,
+                  @NonNull double fats,
+                  @NonNull double protein,
+                  @NonNull int categoryId) {
+        _id = id;
         _author = author;
         _calories = calories;
         _carbohydrates = carbohydrates;
@@ -27,15 +41,10 @@ public class Recept {
         _description = description;
         _imageIcon = imageIcon;
         _protein = protein;
-        _ingridients = new ArrayList<>();
-        _steps = new ArrayList<>();
+        _categoryId = categoryId;
     }
-
-    public List<Ingridient> getIngridients(){
-        return _ingridients;
-    }
-    public List<StepOfRecepts> getSteps(){
-        return _steps;
+    public int getId(){
+        return _id;
     }
 
     public String getAuthor(){
@@ -64,22 +73,27 @@ public class Recept {
         return _title;
     }
 
-    public void addIngridient(Ingridient value){
-        _ingridients.add(value);
+    public static List<Recept> getRecepts(SQLiteDatabase db){
+        List<Recept> recepts = new ArrayList<>();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM Recepts", null);
+        while (cursor.moveToNext()){
+            int id = cursor.getInt(0);
+            String title = cursor.getString(1);
+            String description = cursor.getString(2);
+            String imageIcon = cursor.getString(3);
+            double calories = cursor.getDouble(4);
+            double fats = cursor.getDouble(5);
+            double carbohydrates = cursor.getDouble(6);
+            double protein = cursor.getDouble(7);
+            int category = cursor.getInt(8);
+            String author = cursor.getString(9);
+
+            Recept recept = new Recept(id, author, title, description, imageIcon, calories, carbohydrates, fats, protein, category);
+            recepts.add(recept);
+        }
+
+        return recepts;
     }
-    public void addIngridients(Ingridient[] values){
-        _ingridients.addAll(Arrays.asList(values));
-    }
-    public void addIngridients(List<Ingridient> values){
-        _ingridients.addAll(values);
-    }
-    public void addStep(StepOfRecepts value){
-        _steps.add(value);
-    }
-    public void addSteps(StepOfRecepts[] value){
-        _steps.addAll(Arrays.asList(value));
-    }
-    public void addSteps(List<StepOfRecepts> value){
-        _steps.addAll(value);
-    }
+
 }

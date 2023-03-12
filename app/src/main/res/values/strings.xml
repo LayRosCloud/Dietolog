@@ -19,4 +19,5 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="Finder">Поиск…</string>
     <string name="height">Ваш рост</string>
+    <string name="EnterTitleReciep">Введите название рецепта...</string>
 </resources>
